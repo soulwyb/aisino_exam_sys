@@ -26,7 +26,7 @@ class CommentsAdmin(object):
                 css_class='unsort no_title'
             ),
             Fieldset('Content',
-                'users', 'user_name', 'user_email', 'user_url', 'comment'
+                'user', 'user_name', 'user_email', 'user_url', 'comment'
             ),
         ),
         Side(

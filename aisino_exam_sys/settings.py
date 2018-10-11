@@ -132,3 +132,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
+
+EMAIL_HOST = "smtp.163.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "soulwyb@163.com"
+EMAIL_HOST_PASSWORD = 'aisino123'
+EMAIL_USE_TLS = True
+EMAIL_FROM = "soulwyb@163.com"

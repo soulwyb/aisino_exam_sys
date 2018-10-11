@@ -20,14 +20,10 @@ class UserProfile(AbstractUser):
     birthday = models.DateField( null = True, blank= True, verbose_name=u'生日')
     #手机号
     mobile = models.CharField(max_length=11,  default='', verbose_name=u'电话')
-    #邮箱
-    email = models.EmailField(null=True, blank=True, verbose_name=u'邮箱')
     #头像
     image = models.ImageField(upload_to = 'image/%Y/%m', max_length=100, default = u'image/default.jpg', verbose_name=u'头像')
     #入职时间
     Entyr_date = models.DateField( null=True, blank=True, verbose_name=u'入职时间')
-    #是否有效
-    is_usable = models.BooleanField(default=True, verbose_name=u'是否有效')
     #离职时间
     leavedate = models.DateField(null=True, blank=True, verbose_name=u'离职时间')
     #添加时间
@@ -39,3 +35,22 @@ class UserProfile(AbstractUser):
 
     def __str__(self):
         return self.name
+
+class EmailVerifyRecord(models.Model):
+    SEND_CHOICES = (
+        ('register', u'注册'),
+        ('forget', u'忘记密码')
+    )
+
+    code = models.CharField(max_length=20, verbose_name=u'验证码')
+    email = models.EmailField( max_length=50, verbose_name=u'邮箱')
+    send_type = models.CharField(choices=SEND_CHOICES, max_length=10, verbose_name=u'发送类型')
+    send_time = models.DateTimeField(default=datetime.now, verbose_name=u'发送时间')
+
+    class Meta:
+        verbose_name = u'邮箱验证码'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.email
+

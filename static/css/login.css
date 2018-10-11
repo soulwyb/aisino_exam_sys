@@ -7,3 +7,18 @@
 #login-box {
     margin-top:10%;
 }
+
+.error-msg {
+    color: white;
+    background: #f56954;
+    line-height: 30px !important;
+}
+
+.error-msg ul {
+    padding: 0;
+    margin-left: 0;
+}
+
+.error-msg li {
+    list-style: none;
+}
