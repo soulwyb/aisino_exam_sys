@@ -22,3 +22,16 @@
 .error-msg li {
     list-style: none;
 }
+
+#id_captcha_1 {
+    width: 73%;
+    float:left;
+    margin-right: 2%;
+    margin-bottom: 15px;
+}
+
+#captcha_img {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+}

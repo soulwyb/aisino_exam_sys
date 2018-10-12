@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 AUTH_USER_MODEL = "users.UserProfile"
@@ -143,3 +144,9 @@ EMAIL_HOST_USER = "soulwyb@163.com"
 EMAIL_HOST_PASSWORD = 'aisino123'
 EMAIL_USE_TLS = True
 EMAIL_FROM = "soulwyb@163.com"
+
+#captcha
+
+CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'
+CAPTCHA_IMAGE_SIZE = (80, 28)
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_dots',)

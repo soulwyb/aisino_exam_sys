@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
+from captcha.models import CaptchaStore
+from captcha.helpers import captcha_image_url
 
 from .models import UserProfile, EmailVerifyRecord
 from .forms import LoginForm, ForgetForm
@@ -42,18 +44,32 @@ class CustomBackend(ModelBackend):
 #忘记密码
 class ForgetPwdView(View):
     def get(self, request):
+        #传验证码过去
         forget_form = ForgetForm()
-        return render(request, 'forgetpass.html', {'forget_form': forget_form})
+        hashkey = CaptchaStore.generate_key()
+        image_url = captcha_image_url(hashkey)
+        # return render(request, 'forgetpass.html', {
+        #     'forget_form': forget_form
+        # })
+        return render(request, 'forgetpass.html', {
+            'hashkey': hashkey,
+            'image_url': image_url
+        })
 
     def post(self, request):
         forget_form = ForgetForm(request.POST)
+        hashkey = CaptchaStore.generate_key()
+        image_url = captcha_image_url(hashkey)
         if forget_form.is_valid():
             username = request.POST.get('username', '')
-            user = UserProfile.objects.get(name = username)
+            user = UserProfile.objects.get(username = username)
             send_email(user.email, 'forget')
-            return render(request, 'login.html', {'msg':'重置密码已发送，清注意查收'})
+            return render(request, 'login.html', {'msg':u'重置密码已发送，清注意查收'})
         else:
-            return render(request,'forgetpass.html', {'forget_form': forget_form})
+            return render(request,'forgetpass.html', {
+                'hashkey': hashkey,
+                'image_url': image_url
+            })
 
 class ResetPwdView(View):
     def get(self, request, active_code):
