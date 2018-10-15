@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
@@ -6,9 +8,10 @@ from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
+from django.contrib.auth.hashers import make_password
 
 from .models import UserProfile, EmailVerifyRecord
-from .forms import LoginForm, ForgetForm
+from .forms import LoginForm, ForgetForm, ActiveForm
 from utils.send_mail import send_email
 # Create your views here.
 
@@ -48,10 +51,10 @@ class ForgetPwdView(View):
         forget_form = ForgetForm()
         hashkey = CaptchaStore.generate_key()
         image_url = captcha_image_url(hashkey)
-        # return render(request, 'forgetpass.html', {
+        # return render(request, 'forgetpwd.html', {
         #     'forget_form': forget_form
         # })
-        return render(request, 'forgetpass.html', {
+        return render(request, 'forgetpwd.html', {
             'hashkey': hashkey,
             'image_url': image_url
         })
@@ -66,7 +69,7 @@ class ForgetPwdView(View):
             send_email(user.email, 'forget')
             return render(request, 'login.html', {'msg':u'重置密码已发送，清注意查收'})
         else:
-            return render(request,'forgetpass.html', {
+            return render(request, 'forgetpwd.html', {
                 'hashkey': hashkey,
                 'image_url': image_url
             })
@@ -74,3 +77,52 @@ class ForgetPwdView(View):
 class ResetPwdView(View):
     def get(self, request, active_code):
         all_recode = EmailVerifyRecord.objects.get(code = active_code)
+        hashkey = CaptchaStore.generate_key()
+        image_url = captcha_image_url(hashkey)
+        if all_recode:
+            if all_recode.status_time > datetime.now():
+                email = all_recode.email
+                username = UserProfile.objects.get(email = email).username
+                return render(request, 'reset-pwd.html', {
+                    'username': username,
+                    'hashkey': hashkey,
+                    'image_url': image_url
+                                                          })
+            else:
+                return render(request, 'forgetpwd.html', {
+                    'msg': '验证码失效',
+                    'hashkey': hashkey,
+                    'image_url': image_url
+                })
+        else:
+            return render(request, 'login.html', {'msg': '验证码错误'})
+
+#重置密码界面的表单POST
+class ModifyPwdView(View):
+    def post(self, request):
+        username = request.POST.get('username', '')
+        hashkey = CaptchaStore.generate_key()
+        image_url = captcha_image_url(hashkey)
+        resetpwd_form = ActiveForm(request.POST)
+        if resetpwd_form.is_valid():
+            password1 = request.POST.get('password1', '')
+            password2 = request.POST.get('password2', '')
+            if password1 != password2:
+                return render(request, 'reset-pwd.html', {
+                    'username': username,
+                    'msg': '密码不一致，请重新输入',
+                    'hashkey':hashkey,
+                    'image_url': image_url
+                })
+            else:
+                user = UserProfile.objects.get(username = username)
+                user.password = make_password(password2)
+                user.save()
+                request.POST.get('')
+                return render(request, 'login.html', {'msg':'密码修改成功，请登录','username':username})
+        else:
+            return render(request, 'reset-pwd.html',{
+                'username': username,
+                'haskey':hashkey,
+                'image_url':image_url
+            })

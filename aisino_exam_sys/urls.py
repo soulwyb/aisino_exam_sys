@@ -18,15 +18,16 @@ from django.urls import path, re_path, include
 
 import xadmin
 
-from users.views import LoginView, ForgetPwdView
+from users.views import LoginView, ForgetPwdView, ResetPwdView, ModifyPwdView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
     path('', LoginView.as_view(), name = 'login'),
     path('forget-pwd/', ForgetPwdView.as_view(), name = 'forget_password'),
-    path('captcha/', include('captcha.urls'))
-    # re_path('active/(?P<active_code>.*)/', )
+    path('captcha/', include('captcha.urls')),
+    re_path('reset-pwd/(?P<active_code>.*)/', ResetPwdView.as_view(), name='reset_pwd'),
+    path('modify-pwd/', ModifyPwdView.as_view(), name='modify_pwd')
 
 
 ]

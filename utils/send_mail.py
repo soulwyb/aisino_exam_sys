@@ -3,6 +3,7 @@ __author__ = 'wuyubin'
 __date__ = '2018-10-11 17:38'
 
 from random import Random
+import datetime
 
 from django.core.mail import send_mail, EmailMessage
 from aisino_exam_sys.settings import EMAIL_FROM
@@ -32,6 +33,6 @@ def send_email(email, send_type = 'forget'):
 
     if send_type == 'forget':
         email_title = u'Aisino厦门航信金税业务部忘记密码重置连接'
-        email_body = u'请点击一下连接进入重置页面：http://192.168.2.115:8000/acvive/{0}'.format(code)
+        email_body = u'请点击一下连接进入重置页面：http://192.168.2.115:8000/reset-pwd/{0}'.format(code)
         send_status = send_mail(email_title,email_body,EMAIL_FROM, [email])
 

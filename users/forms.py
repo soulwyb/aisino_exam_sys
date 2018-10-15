@@ -18,5 +18,5 @@ class ForgetForm(forms.Form):
     username = forms.CharField(required=True, error_messages={'required': '用户名不能为空'})
     captcha = CaptchaField()
 
-# class ResetPwd(forms.Form):
-#
+class ActiveForm(forms.Form):
+    captcha = CaptchaField()

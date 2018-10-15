@@ -1,8 +1,9 @@
-from datetime import datetime
-
+from datetime import datetime as dt
+import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from utils.other_tools import avlid_datetiem
 # Create your models here.
 
 class UserProfile(AbstractUser):
@@ -27,7 +28,7 @@ class UserProfile(AbstractUser):
     #离职时间
     leavedate = models.DateField(null=True, blank=True, verbose_name=u'离职时间')
     #添加时间
-    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    add_time = models.DateTimeField(default=dt.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'用户信息'
@@ -45,7 +46,8 @@ class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u'验证码')
     email = models.EmailField( max_length=50, verbose_name=u'邮箱')
     send_type = models.CharField(choices=SEND_CHOICES, max_length=10, verbose_name=u'发送类型')
-    send_time = models.DateTimeField(default=datetime.now, verbose_name=u'发送时间')
+    send_time = models.DateTimeField(default=dt.now, verbose_name=u'发送时间')
+    status_time = models.DateTimeField(default=avlid_datetiem, verbose_name=u'有效时间')
 
     class Meta:
         verbose_name = u'邮箱验证码'
@@ -53,4 +55,3 @@ class EmailVerifyRecord(models.Model):
 
     def __str__(self):
         return self.email
-
