@@ -1,0 +1,50 @@
+#btn-group-style {
+    float: right;
+    margin-right: 10px;
+}
+
+#box-style {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #d2d6de;
+}
+
+.btn-size {
+    padding: 10px 15px;
+}
+
+#box-header-style {
+    background: #f3edf2;
+    border-bottom: 1px solid #d2d6de;
+    margin-bottom: 20px;
+}
+
+#box-header-title {
+    font-size:24px;
+    color:#970404;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 5px;
+}
+
+.title-style {
+    font-family: sans-serif;
+}
+
+.icon-color {
+    color: rgb(2, 80, 2);
+}
+
+.form-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+#table-top {
+    margin-top:15px;
+}
+
+.btn-custom {
+    padding: 4px 8px;
+}

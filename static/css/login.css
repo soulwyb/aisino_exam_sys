@@ -35,3 +35,12 @@
     top:50%;
     transform: translateY(-50%);
 }
+
+#text-left {
+    margin-top: -10px;
+    margin-bottom: 13px;
+}
+
+#username-input {
+    margin-bottom: -10px;
+}

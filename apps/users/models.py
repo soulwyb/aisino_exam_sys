@@ -55,3 +55,7 @@ class EmailVerifyRecord(models.Model):
 
     def __str__(self):
         return self.email
+
+
+# class Wrong_Question(models.Model):
+#     name = models.CharField(max_length=100, verbose_name=u'考卷名称')

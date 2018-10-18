@@ -1,0 +1,96 @@
+from django.db import models
+
+from organization.models import Company, Department, Group
+
+# Create your models here.
+
+#考试题库
+class QuestionBank(models.Model):
+    company = models.ForeignKey(Company, verbose_name=u'公司', on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, null = True, verbose_name=u'部门', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, null = True, verbose_name=u'组织', on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, verbose_name=u'名称')
+
+    class Meta:
+        verbose_name = u'题库'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+#单选题
+class Single_Choice_Question(models.Model):
+    DEGREE_CHOICES = (
+        ('cj', u'初级'),
+        ('zj', u'中级'),
+        ('gj',u'高级'),
+    )
+    questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, verbose_name=u'题目')
+    degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
+    option_0 = models.CharField(max_length=200, verbose_name='A')
+    option_1 = models.CharField(max_length=200, verbose_name='B')
+    option_2 = models.CharField(max_length=200, null = True, verbose_name='C')
+    option_3 = models.CharField(max_length=200, null = True, verbose_name='D')
+    option_4 = models.CharField(max_length=200, null = True, verbose_name='E')
+    answer = models.CharField(max_length=4, verbose_name=u'答案')
+    valid = models.BooleanField(default=True, verbose_name=u'是否有效')
+
+    class Meta:
+        verbose_name = u'单选题'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+#多选题
+class Multiple_Choice_Question(models.Model):
+    DEGREE_CHOICES = (
+        ('cj', u'初级'),
+        ('zj', u'中级'),
+        ('gj', u'高级'),
+    )
+    questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, verbose_name=u'题目')
+    degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
+    option_0 = models.CharField(max_length=200, verbose_name='A')
+    option_1 = models.CharField(max_length=200, verbose_name='B')
+    option_2 = models.CharField(max_length=200, verbose_name='C')
+    option_3 = models.CharField(max_length=200, null = True, verbose_name='D')
+    option_4 = models.CharField(max_length=200, null = True, verbose_name='E')
+    answer = models.CharField(max_length=4, verbose_name=u'答案')
+    valid = models.BooleanField(default=True, verbose_name=u'是否有效')
+
+    class Meta:
+        verbose_name = u'多选题'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+#判断题
+class True_or_False(models.Model):
+    DEGREE_CHOICES = (
+        ('cj', u'初级'),
+        ('zj', u'中级'),
+        ('gj', u'高级'),
+    )
+    questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, verbose_name=u'题目')
+    degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
+    answer = models.BooleanField(default=True, verbose_name=u'答案')
+    valid = models.BooleanField(default=True, verbose_name=u'是否有效')
+
+    class Meta:
+        verbose_name = u'判断题'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+# #考卷
+# class Exam_paper(models.Model):
+#     name = models.CharField(max_length=100, verbose_name=u'名称')
+#     passing_score = models.IntegerField(max_length=3, verbose_name=u'合格分数')
+#     redo = models.IntegerField(max_length=4, verbose_name=u'重做次数')
+#

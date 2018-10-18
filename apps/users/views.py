@@ -122,6 +122,7 @@ class ModifyPwdView(View):
                 return render(request, 'login.html', {'msg':'密码修改成功，请登录','username':username})
         else:
             return render(request, 'reset-pwd.html',{
+                'msg':'验证码错误，请重新输入',
                 'username': username,
                 'haskey':hashkey,
                 'image_url':image_url
