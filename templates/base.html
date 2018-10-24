@@ -155,7 +155,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-database"></i> 题库管理</a></li>
+            <li><a href="{% url 'question_bank' %}"><i class="fa fa-database"></i> 题库管理</a></li>
             </li>
           </ul>
         </li>
@@ -235,12 +235,14 @@
 
   <!-- =============================================== -->
 <!--内容主体-->
-<div class="content-wrapper">
+<div class="custom-layer-occlusion" id="custom-layer-display"></div>
+<div class="content-wrapper custom-bottom-layer">
 
     <!-- Main content -->
     <section class="content">
       <div class="box" id="box-style">
           {% block contemt_header %}
+
         <div class="box-header-style box-header" id="box-header-style">
           <h3 class="box-title fa fa fa-database"id="box-header-title"> <span class="title-style">题库管理</span></h3>
           <div class="btn-group" id="btn-group-style">

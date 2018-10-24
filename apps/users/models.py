@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 from utils.other_tools import avlid_datetiem
+from organization.models import Company, Department, Group
 # Create your models here.
 
 class UserProfile(AbstractUser):
@@ -29,6 +30,14 @@ class UserProfile(AbstractUser):
     leavedate = models.DateField(null=True, blank=True, verbose_name=u'离职时间')
     #添加时间
     add_time = models.DateTimeField(default=dt.now, verbose_name=u'添加时间')
+    #公司
+    company = models.ForeignKey(Company, verbose_name=u'公司', on_delete=models.CASCADE)
+    #部门
+    department = models.ForeignKey(Department, null=True, blank= True, verbose_name=u'部门', on_delete=models.CASCADE)
+    #组织
+    group = models.ForeignKey(Group, null = True, blank= True, verbose_name=u'组织', on_delete=models.CASCADE)
+    #是否是管理员
+    is_admin = models.BooleanField(default=False, verbose_name=u'是否是管理员')
 
     class Meta:
         verbose_name = u'用户信息'

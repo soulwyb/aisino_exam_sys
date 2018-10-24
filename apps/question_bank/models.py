@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 from organization.models import Company, Department, Group
@@ -7,9 +9,10 @@ from organization.models import Company, Department, Group
 #考试题库
 class QuestionBank(models.Model):
     company = models.ForeignKey(Company, verbose_name=u'公司', on_delete=models.CASCADE)
-    department = models.ForeignKey(Department, null = True, verbose_name=u'部门', on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null = True, verbose_name=u'组织', on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, null = True, blank = True, verbose_name=u'部门', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, null = True, blank= True, verbose_name=u'组织', on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name=u'名称')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'题库'
@@ -30,11 +33,12 @@ class Single_Choice_Question(models.Model):
     degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
     option_0 = models.CharField(max_length=200, verbose_name='A')
     option_1 = models.CharField(max_length=200, verbose_name='B')
-    option_2 = models.CharField(max_length=200, null = True, verbose_name='C')
-    option_3 = models.CharField(max_length=200, null = True, verbose_name='D')
-    option_4 = models.CharField(max_length=200, null = True, verbose_name='E')
+    option_2 = models.CharField(max_length=200, null = True, blank=True, verbose_name='C')
+    option_3 = models.CharField(max_length=200, null = True, blank=True, verbose_name='D')
+    option_4 = models.CharField(max_length=200, null = True, blank=True, verbose_name='E')
     answer = models.CharField(max_length=4, verbose_name=u'答案')
     valid = models.BooleanField(default=True, verbose_name=u'是否有效')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'单选题'
@@ -56,10 +60,11 @@ class Multiple_Choice_Question(models.Model):
     option_0 = models.CharField(max_length=200, verbose_name='A')
     option_1 = models.CharField(max_length=200, verbose_name='B')
     option_2 = models.CharField(max_length=200, verbose_name='C')
-    option_3 = models.CharField(max_length=200, null = True, verbose_name='D')
-    option_4 = models.CharField(max_length=200, null = True, verbose_name='E')
+    option_3 = models.CharField(max_length=200, null = True, blank=True, verbose_name='D')
+    option_4 = models.CharField(max_length=200, null = True, blank=True, verbose_name='E')
     answer = models.CharField(max_length=4, verbose_name=u'答案')
     valid = models.BooleanField(default=True, verbose_name=u'是否有效')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'多选题'
@@ -78,8 +83,9 @@ class True_or_False(models.Model):
     questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name=u'题目')
     degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
-    answer = models.BooleanField(default=True, verbose_name=u'答案')
+    answer = models.BooleanField(default=True, verbose_name=u'是否正确（正确打钩）')
     valid = models.BooleanField(default=True, verbose_name=u'是否有效')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'判断题'

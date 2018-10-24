@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -5,6 +7,7 @@ from django.db import models
 
 class Company(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'名称')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'公司'
@@ -15,8 +18,9 @@ class Company(models.Model):
 
 
 class Department(models.Model):
-    Company = models.ForeignKey(Company, verbose_name=u'公司', on_delete= models.CASCADE)
+    company = models.ForeignKey(Company, verbose_name=u'公司', on_delete= models.CASCADE)
     name = models.CharField(max_length=10, verbose_name=u'名称')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'部门'
@@ -26,9 +30,9 @@ class Department(models.Model):
         return self.name
 
 class Group(models.Model):
-    company = models.ForeignKey(Company, verbose_name=u'公司名称', on_delete= models.CASCADE)
     department = models.ForeignKey(Department, verbose_name=u'部门', on_delete= models.CASCADE)
     name = models.CharField(max_length=20, verbose_name=u'名称')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:
         verbose_name = u'组织'

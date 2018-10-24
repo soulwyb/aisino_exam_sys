@@ -15,19 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.views.generic import TemplateView
 
 import xadmin
 
 from users.views import LoginView, ForgetPwdView, ResetPwdView, ModifyPwdView
+from question_bank.views import question_manageView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
+    #先暂时把这个路径写成主页的，最后做主页的时候再改
     path('', LoginView.as_view(), name = 'login'),
     path('forget-pwd/', ForgetPwdView.as_view(), name = 'forget_password'),
     path('captcha/', include('captcha.urls')),
     re_path('reset-pwd/(?P<active_code>.*)/', ResetPwdView.as_view(), name='reset_pwd'),
-    path('modify-pwd/', ModifyPwdView.as_view(), name='modify_pwd')
+    path('modify-pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
+    path('question/', question_manageView.as_view(), name='question_bank'),
 
 
 ]

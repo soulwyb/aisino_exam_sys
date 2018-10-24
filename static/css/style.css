@@ -48,3 +48,34 @@
 .btn-custom {
     padding: 4px 8px;
 }
+
+#custom-tree {
+    padding-left: 12px;
+    list-style: none;
+}
+
+.custom-float-question {
+    position: absolute;
+    width: 400px;
+    height: 250px;
+    top:150px;
+    left:30%;
+    background-color: #fff0f0;
+    display: none;
+    cursor: pointer;
+    z-index: 3;
+}
+.custom-layer-occlusion {
+    position: absolute;
+    background-color: #000;
+    width: 100%;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+    opacity: 0.6;
+    display: none;
+    z-index: 2;
+}
+
+.custom-bottom-layer, #custom-bottom-layer {
+    z-index: 1;
+}
