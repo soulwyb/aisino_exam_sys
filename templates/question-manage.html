@@ -23,25 +23,30 @@
                       <span>所属公司</span>
                   </a>
                   <ul class="treeview-menu">
-                    <li class="treeview">
+                    <li class="treeview custom-tree-selected">
                       <a href="#"><i class="fa fa-circle-o"></i> 航天信息股份有限公司厦门分公司
                       </a>
                       <ul class="treeview-menu">
-                        <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i> 金税业务部</a>
+                        <li class="treeview custom-tree-selected"><a href="#"><i class="fa fa-circle-o"></i> 金税业务部</a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 层级3</a></li>
+                            <li class="custom-tree-selected"><a href="#"><i class="fa fa-circle-o"></i> 思明服务站</a></li>
+                            <li class="treeview custom-tree-selected"><a href="#"><i class="fa fa-circle-o"></i> 湖里服务站</a>
+                            <ul class="treeview-menu">
+                                <li class="custom-tree-selected"><a href="#"><i class="fa fa-file-o"></i> 范围税控考试</a></li>
+                            </ul>
+                            </li>
                         </ul></li>
-                        <li class="treeview">
+                        <li class="treeview custom-tree-selected">
                           <a href="#"><i class="fa fa-circle-o"></i> 产品事业部
                           </a>
                           <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 层级3</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> 层级3</a></li>
+                            <li class="custom-tree-selected"><a href="#"><i class="fa fa-circle-o"></i> 层级3</a></li>
+                            <li class="custom-tree-selected"><a href="#"><i class="fa fa-circle-o"></i> 层级3</a></li>
                           </ul>
                         </li>
                       </ul>
                     </li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> 层级1</a></li>
+                    <li class="custom-tree-selected"><a href="#"><i class="fa fa-circle-o"></i> 层级1</a></li>
                   </ul>
                 </li>
              </ul>
@@ -203,29 +208,27 @@
   <div>
     <!-- Main content -->
     <section class="content">
-      <div class="box">
+      <div class="box  box-style">
         <div class="box-header with-border">
-          <h3 class="box-title">标题</h3>
+          <h3 class="box-title" id="custom-pop-box-title">新建题库</h3>
         </div>
         <div class="box-body">
           开始创建你的应用程序！开始创建你的应用程序！
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-底部
-        </div>
-        <!-- /.box-footer-->
       </div>
       <!-- /.box -->
     </section>
     <!-- /.content -->
   </div>
+<!-- 弹出层 -->
 </div>
 
 {% endblock %}
 {% block custom_js %}
 <script src="{% static 'adminlte/iCheck/icheck.min.js' %}"></script>
 <script src="{% static 'js/custom.js' %}"></script>
+<script src="{%  static 'js/zepto.js' %}"></script>
 <script>
     $('input[type="checkbox"].minimal').iCheck({
       checkboxClass: 'icheckbox_minimal-blue'
