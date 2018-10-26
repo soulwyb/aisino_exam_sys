@@ -49,22 +49,27 @@
     padding: 4px 8px;
 }
 
+/*题库管理的部门组织树列表的样式*/
 #custom-tree {
     padding-left: 12px;
     list-style: none;
 }
 
+/*题库管理的添加题库样式*/
 .custom-float-question {
     position: absolute;
-    width: 400px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
     height: 250px;
     top:150px;
-    left:30%;
-    background-color: #fff0f0;
+    background-color: #ecf0f5;
     display: none;
     cursor: pointer;
     z-index: 3;
 }
+
+/*遮罩层*/
 .custom-layer-occlusion {
     position: absolute;
     background-color: #000;
@@ -78,5 +83,28 @@
 
 .custom-bottom-layer, #custom-bottom-layer {
     z-index: 1;
+}
+
+/*题库管理-没有选择题库的警告框样式*/
+#custom-warning-pop {
+    display: none;
+    position: absolute;
+    top:40%;
+    transform: translateY(-50%);
+    width: 40%;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+    opacity: 0.9;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 3;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+/*题目管理-没有选择题库后的警告框-“警告”样式*/
+#custom-warning-pop > strong {
+    float: left;
+    font-size: 18px;
 }
 

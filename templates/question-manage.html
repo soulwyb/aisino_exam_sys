@@ -203,14 +203,17 @@
                   </div>
             </div>
             <!--right_content-->
-          </div>
-<div class="custom-float-question" id="custom-float-display">
+  <div class="alert alert-danger" id="custom-warning-pop">
+   <a href="#" class="close">
+   <i class="fa fa-close "></i></a>
+   <strong>警告！</strong> <span>您未选择相应的组织</span></div>
+  <div class="custom-float-question" id="custom-float-display">
   <div>
     <!-- Main content -->
     <section class="content">
       <div class="box  box-style">
-        <div class="box-header with-border">
-          <h3 class="box-title" id="custom-pop-box-title">新建题库</h3>
+        <div class="box-header with-border" id="box-header-style">
+          <h3 class="box-title" id="custom-pop-box-title">添加题库</h3>
         </div>
         <div class="box-body">
           开始创建你的应用程序！开始创建你的应用程序！
@@ -223,7 +226,7 @@
   </div>
 <!-- 弹出层 -->
 </div>
-
+  </div>
 {% endblock %}
 {% block custom_js %}
 <script src="{% static 'adminlte/iCheck/icheck.min.js' %}"></script>
@@ -242,10 +245,5 @@
   $('#all').on('ifUnchecked', function(event){
     $('input#question_id').iCheck('uncheck');
   });
-</script>
-<script>
-$(function(){
-    $("custom-tree-js").find()
-})
 </script>
 {% endblock %}
