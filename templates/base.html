@@ -240,15 +240,15 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="box box-style">
+      <div class="box">
           {% block contemt_header %}
 
         <div class="box-header-style box-header" id="box-header-style">
-          <h3 class="box-title fa fa fa-database"id="box-header-title"> <span class="title-style">题库管理</span></h3>
+          <h3 class="box-title fa fa fa-database box-header-title"> <span class="title-style">题库管理</span></h3>
           <div class="btn-group" id="btn-group-style">
-            <button type="button" class="btn btn-primary fa fa-edit btn-size"> 新建</button>
-            <button type="button" class="btn btn-primary fa fa-trash-o btn-size"> 删除</button>
-            <button type="button" class="btn btn-primary fa fa-refresh btn-size"> 刷新</button>
+            <button type="button" class="btn btn-primary fa fa-edit btn-size" id="create"> 新建</button>
+            <button type="button" class="btn btn-primary fa fa-trash-o btn-size" id="delete"> 删除</button>
+            <button type="button" class="btn btn-primary fa fa-refresh btn-size" id="refresh"> 刷新</button>
           </div>
           <!--header_btn-->
         </div>
@@ -260,12 +260,6 @@
           <!--body-content-->
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-            {% block content_footer %}
-底部
-            {% endblock %}
-        </div>
-        <!-- /.box-footer-->
       </div>
     </section>
     <!-- /.content -->

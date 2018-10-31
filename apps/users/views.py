@@ -17,7 +17,11 @@ from utils.send_mail import send_email
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'login.html', {})
+        # 判断用户是否登录
+        if request.user.is_authenticated:
+            return render(request, 'index.html')
+        else:
+            return render(request, 'login.html', {})
 
     def post(self, request):
         username = request.POST.get('username', '')

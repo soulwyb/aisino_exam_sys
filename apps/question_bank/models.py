@@ -39,6 +39,7 @@ class Single_Choice_Question(models.Model):
     answer = models.CharField(max_length=4, verbose_name=u'答案')
     valid = models.BooleanField(default=True, verbose_name=u'是否有效')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    type = models.CharField(default=u'单选', max_length=10, verbose_name=u'类型')
 
     class Meta:
         verbose_name = u'单选题'
@@ -65,6 +66,7 @@ class Multiple_Choice_Question(models.Model):
     answer = models.CharField(max_length=4, verbose_name=u'答案')
     valid = models.BooleanField(default=True, verbose_name=u'是否有效')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    type = models.CharField(default=u'多选', max_length=10, verbose_name=u'类型')
 
     class Meta:
         verbose_name = u'多选题'
@@ -86,6 +88,7 @@ class True_or_False(models.Model):
     answer = models.BooleanField(default=True, verbose_name=u'是否正确（正确打钩）')
     valid = models.BooleanField(default=True, verbose_name=u'是否有效')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    type = models.CharField(default=u'判断', max_length=10, verbose_name=u'类型')
 
     class Meta:
         verbose_name = u'判断题'

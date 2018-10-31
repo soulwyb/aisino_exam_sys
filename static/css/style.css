@@ -3,35 +3,48 @@
     margin-right: 10px;
 }
 
-.box-style {
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-top-color: #d2d6de;
+/*主题内容的div样式*/
+/*#box-style {*/
+    /*border-top-width: 1px; !important;*/
+    /*border-top-style: solid;*/
+    /*border-top-color: #d2d6de;*/
+/*}*/
+
+.box {
+  position: relative;
+  border-radius: 3px;
+  background: #ffffff;
+  border-top: 1px solid #d2d6de;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .btn-size {
     padding: 10px 15px;
 }
 
+/*主题背景样式*/
 #box-header-style {
     background: #f3edf2;
     border-bottom: 1px solid #d2d6de;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
-#box-header-title {
-    font-size:24px;
+.box-header-title {
     color:#970404;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: 5px;
+    /*margin-left: 5px;*/
 }
-
+/*主题内容标题文字样式*/
 .title-style {
     font-family: sans-serif;
+    font-size: 22px;
 }
 
+/*题库选择列表中的ICON样式*/
 .icon-color {
     color: rgb(2, 80, 2);
 }
@@ -60,12 +73,11 @@
     position: absolute;
     margin-left: 50%;
     transform: translateX(-50%);
-    width: 50%;
-    height: 250px;
-    top:150px;
+    width: 40%;
+    /*height: 250px;*/
+    top:100px;
     background-color: #ecf0f5;
     display: none;
-    cursor: pointer;
     z-index: 3;
 }
 
@@ -102,9 +114,55 @@
     font-size: 16px;
     letter-spacing: 3px;
 }
+
 /*题目管理-没有选择题库后的警告框-“警告”样式*/
 #custom-warning-pop > strong {
     float: left;
     font-size: 18px;
 }
 
+.custom-pop-box {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/*弹出窗头部样式*/
+.custom-pop-header {
+    padding: 22px 4px;
+
+}
+
+/*弹出框的标题样式*/
+.custom-pop-header > h3 {
+    font-weight: bold;
+    font-size: 18px;
+    color:#970404;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+/*弹出窗口表单选项标题与内容的样式*/
+.custom-pop-body label {
+    margin-bottom: 8px;
+    font-family: sans-serif;
+    font-size: 15px;
+    color: #333;
+}
+
+/*弹出窗input下边的那个边距*/
+.custom-add-margin {
+    padding-bottom: 10px;
+}
+
+/*弹出窗按钮样式*/
+.custom-btn-group button {
+    padding-left:15px;
+    padding-right:15px;
+}
+
+input[type=file] {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
