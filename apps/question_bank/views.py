@@ -1,10 +1,12 @@
+# encoding:utf-8
+
 from itertools import chain
 
 from django.shortcuts import render
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
-from .models import QuestionBank
 from organization.models import Company, Department, Group
 from question_bank.models import QuestionBank, Single_Choice_Question, Multiple_Choice_Question, True_or_False
 # Create your views here.
@@ -14,6 +16,7 @@ class question_manageView(View, LoginRequiredMixin):
     login_url = ''
     redirect_field_name = 'redirect_to'
     def get(self, request):
+        # if request.user.is_aut
         companys = Company.objects.all()
         derpartments = Department.objects.all()
         groups = Group.objects.all()
@@ -29,3 +32,6 @@ class question_manageView(View, LoginRequiredMixin):
             'groups': groups,
             'questions': questions,
         })
+
+    def post(self, request):
+        return HttpResponse('{"status":"success"}', content_type="application/json")

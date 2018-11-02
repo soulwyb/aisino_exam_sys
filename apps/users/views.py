@@ -1,3 +1,5 @@
+# encoding:utf-8
+
 from datetime import datetime
 
 from django.shortcuts import render
@@ -31,7 +33,7 @@ class LoginView(View):
             user = authenticate(username = username, password = password)
             if user is not None:
                 login(request, user)
-                return render(request, 'question-manage.html')
+                return render(request, 'index.html')
             else:
                 return render(request, 'login.html', {"msg":"用户名或密码错误！"})
         else:

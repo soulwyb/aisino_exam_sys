@@ -1,3 +1,4 @@
+# encoding:utf-8
 from datetime import datetime as dt
 import datetime
 from django.db import models
