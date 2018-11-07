@@ -34,4 +34,15 @@ class question_manageView(View, LoginRequiredMixin):
         })
 
     def post(self, request):
-        return HttpResponse('{"status":"success"}', content_type="application/json")
+
+        return HttpResponse('{"status":"scuess"}', content_type="application/json")
+
+class add_group_or_question(View, LoginRequiredMixin):
+    login_url = ''
+    redirect_field_name = 'redirect_to'
+    def post(self, request):
+        input_type = request.POST.get('input_type', '')
+        name = request.POST.get('name', '')
+        father_group = request.POST.get('father_group', '')
+
+

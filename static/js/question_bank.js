@@ -1,41 +1,35 @@
-$(function () {
-    // $.ajaxSetup({
-    //     beforeSend: function(xhr, settings){
-    //         var csrftoken = $.cookie('csrftoken');
-    //         xhr.setRequestHeader("X-CSRFToken");
-    //     }
-    // });
-    $('#custom-add-groups').click(function(){
-        var type = $('input:radio[name="r1"]:checked').attr("group-values");
-        var value = $(".custom-add-margin > input").val();
-        var father_group = $("#custom-float-add .custom-pop-title").text().split(" - ")[1];
+$(function(){
 
-        if (value == '') {
-            alert("亲，名称不能为空哦~");
-        }
-        else {
-            $.ajax({
+    // 新建题库或者组织
+     $('#custom-add-groups').click(function(){
+        var input_type = $('input:radio[name="r1"]:checked').attr("group-values");
+        var name = $("#custom-name").val();
+        var father_group = $("#custom-float-add .custom-pop-title").text().split(" - ")[1];
+         if(!name){
+             alert('亲，名称不能为空哦~');
+         }
+         else{
+             $.ajax({
                 cache:false,
                 type: "POST",
-                url: "{% url 'question_bank' %}",
-                data: { 'group_name' : father_group, 'type': type, 'name' : value },
-                async: true,
+                url: urls,
+                data: { 'input_type' : input_type, 'name' : name, 'father_group': father_group },
+                async: false,
                 beforeSend: function(xhr, settings){
-                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                    xhr.setRequestHeader("X-CSRFToken", $('#csrf_token').val());
                 },
                 success: function(data){
                     if(data.status == 'fail'){
-                        alert('fail');
+                        alert(data.msg);
                     }
-                    else {
+                    else if(data.status == 'success'){
+                        alert('已成功提交。');
+                    }
+                    else{
                         alert(data.msg);
                     }
                 },
             });
-                //             alert("success");
-                // $('.custom-div-hidden').css("display", "none");
-                // $('#custom-layer-display').css("display", "none");
-                // $('#custom-tree-js').fresh();
-        }
-    });
+         }
+     })
 })

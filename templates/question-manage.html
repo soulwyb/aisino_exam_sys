@@ -225,12 +225,13 @@
               </div>
             <div class="form-group custom-add-margin">
                 <label>名称</label>
-                <input type="text" class="form-control" placeholder="输入名称" value="">
+                <input type="text" class="form-control" id="custom-name" placeholder="输入名称" value="">
+                <input type="hidden" id="csrf_token" value="{{ csrf_token }}">
             </div>
             <div class="form-group row">
                 <div class="col-xs-3 col-md-4 col-lg-4"></div>
                 <div class="custom-btn-group">
-                <button type="submit" class="btn btn-primary" id="custom-add-groups" style="margin-right: 3%;margin-left:-3%;">提交</button>
+                <button type="button" class="btn btn-primary" id="custom-add-groups" style="margin-right: 3%;margin-left:-3%;">提交</button>
                 <button class="btn btn-primary custom-close-btn">取消</button>
                 </div>
             </div>
@@ -338,14 +339,12 @@
 <script src="{% static 'adminlte/iCheck/icheck.min.js' %}"></script>
 <script src="{% static 'js/custom.js' %}"></script>
 <script src="{%  static 'js/zepto.js' %}"></script>
-<script src="{% static 'js/question-manage.js' %}"></script>
 <script src="{% static 'js/question_bank.js' %}"></script>
 <script src="{% static 'js/jquery.cookie.js' %}"></script>
 <script>
     $('input[type="checkbox"].minimal').iCheck({
       checkboxClass: 'icheckbox_minimal-blue'
     })
-
 </script>
 <script>
   $('#all').on('ifChecked', function(event){
@@ -360,4 +359,8 @@
       radioClass   : 'iradio_minimal-blue'
     })
 </script>
+<script>
+    var urls = "{% url 'question_bank:add_group_or_bank' %}"
+</script>
+<script src="{% static 'js/question-manage.js' %}"></script>
 {% endblock %}

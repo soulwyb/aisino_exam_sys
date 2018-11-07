@@ -80,5 +80,4 @@ $(function(){
         $('.custom-div-hidden').css("display", "none");
         $('#custom-layer-display').css("display", "none");
     });
-
 })

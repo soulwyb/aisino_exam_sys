@@ -22,6 +22,7 @@ import xadmin
 from users.views import LoginView, ForgetPwdView, ResetPwdView, ModifyPwdView
 from question_bank.views import question_manageView
 
+
 urlpatterns = [
     #path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
@@ -31,7 +32,8 @@ urlpatterns = [
     path('captcha/', include('captcha.urls')),
     re_path('reset-pwd/(?P<active_code>.*)/', ResetPwdView.as_view(), name='reset_pwd'),
     path('modify-pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
-    path('question/', question_manageView.as_view(), name='question_bank'),
+    path('question-index/', question_manageView.as_view(), name = 'question'),
+    path('question/', include('question_bank.urls', namespace = 'question_bank')),
 
 
 ]
