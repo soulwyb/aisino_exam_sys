@@ -9,7 +9,7 @@ from organization.models import Company, Department, Group
 
 #考试题库
 class QuestionBank(models.Model):
-    company = models.ForeignKey(Company, verbose_name=u'公司', on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, null = True, blank = True, verbose_name=u'公司', on_delete=models.CASCADE)
     department = models.ForeignKey(Department, null = True, blank = True, verbose_name=u'部门', on_delete=models.CASCADE)
     group = models.ForeignKey(Group, null = True, blank= True, verbose_name=u'组织', on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name=u'名称')

@@ -17,6 +17,9 @@ $(function(){
             $(label_name).css("display","block");
             $('.custom-pop-title').text(label_title + " - " + title);
             flag=1;
+            if(is_question_bank){
+                $('.custom-float-add custom-pop-title').attr('id','question');
+            }
         }
     };
 

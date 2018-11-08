@@ -28,37 +28,37 @@
                       <a href="#" class="custom-tree-selected"><i class="fa fa-circle-o"></i> {{ company.name }}
                       </a>
                       <ul class="treeview-menu">
-                      {% for derpartment in derpartments %}
-                          {% ifequal derpartment.company.name company.name %}
-                        <li class="treeview"><a href="#" class="custom-tree-selected"><i class="fa fa-circle-o"></i>{{ derpartment.name }}</a>
-                        <ul class="treeview-menu">
-                        {% for group in groups %}
-                            {% ifequal group.department.name derpartment.name %}
-                            <li class="treeview"><a href="#" class="custom-tree-selected"><i class="fa fa-circle-o"></i>{{ group.name }}</a>
+                      {% for department in departments %}
+                          {% ifequal department.company.name company.name %}
+                            <li class="treeview"><a href="#" class="custom-tree-selected"><i class="fa fa-circle-o"></i>{{ department.name }}</a>
                             <ul class="treeview-menu">
-                            {% for question_bank in group.questionbank_set.get_queryset %}
-                                {% ifequal question_bank.group.name group.name %}
+                            {% for group in groups %}
+                                {% ifequal group.department.name department.name %}
+                                    <li class="treeview"><a href="#" class="custom-tree-selected"><i class="fa fa-circle-o"></i>{{ group.name }}</a>
+                                        <ul class="treeview-menu">
+                                        {% for question_bank in group.questionbank_set.get_queryset %}
+                                            {% ifequal question_bank.group.name group.name %}
+                                                <li><a href="#" class="custom-tree-selected" type="question_bank"><i class="fa fa-file-o"></i> {{ question_bank.name }}</a></li>
+                                            {% endifequal %}
+                                        {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endifequal %}
+                            {% endfor %}
+                            {% for question_bank in department.questionbank_set.get_queryset %}
+                                {% ifequal question_bank.department.name department.name %}
                                     <li><a href="#" class="custom-tree-selected" type="question_bank"><i class="fa fa-file-o"></i> {{ question_bank.name }}</a></li>
                                 {% endifequal %}
                             {% endfor %}
-                                </ul>
-                            </li>
-                            {% endifequal %}
-                        {% endfor %}
-                        {% for question_bank in derpartment.questionbank_set.get_queryset %}
-                            {% if question_bank.group == "" %}
-                                <li><a href="#" class="custom-tree-selected" type="question_bank"><i class="fa fa-file-o"></i> {{ question_bank.name }}</a></li>
-                            {% endif %}
-                        {% endfor %}
                             </ul>
-                        </li>
-                          {% endifequal %}
+                            </li>
+                        {% endifequal %}
                       {% endfor %}
                       {% for question_bank in company.questionbank_set.get_queryset%}
-                          {% if question_bank.department == "" and question.group == "" %}
+                          {% ifequal question_bank.company.name company.name %}
                             <li><a href="#" class="custom-tree-selected" type="question_bank"><i class="fa fa-file-o"></i> {{ question_bank.name }}</a></li>
-                          {% endif %}
-                          {% endfor %}
+                          {% endifequal %}
+                      {% endfor %}
                       </ul>
                     </li>
                   {% endfor %}
@@ -211,13 +211,13 @@
                       </div>
                     <div class="col-xs-12 col-md-4 col-lg-4">
                 <label>
-                  <input type="radio" name="r1" class="minimal" value="group" >
+                  <input type="radio" name="r1" class="minimal" group-values="group" >
                     <span> 组织</span>
                 </label>
                       </div>
                   <div class="col-xs-12 col-md-4 col-lg-4">
                 <label>
-                  <input type="radio" name="r1" class="minimal" value="question">
+                  <input type="radio" name="r1" class="minimal" group-values="question">
                     <span> 题库</span>
                 </label>
                   </div>

@@ -6,7 +6,7 @@ app_name = 'question_bank'
 
 from django.urls import re_path, path
 
-from question_bank.views import question_manageView
+from question_bank.views import add_group_or_questionView
 urlpatterns = [
-    path('add_group_bank/', question_manageView.as_view(), name='add_group_or_bank'),
+    path('add_group_bank/', add_group_or_questionView.as_view(), name='add_group_or_bank'),
 ]
