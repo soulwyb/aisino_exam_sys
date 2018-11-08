@@ -43,7 +43,9 @@ $(function(){
 // 题库或组织编辑
     $('#edit_department').click(function(){
         pop_label('#custom-float-edit', '题库编辑');
-        $('#custom-input-value').attr("value",title);
+        if($('#custom-active').attr('type') == 'company'){
+            $('#edit_question').attr('disabled', 'true');
+        }
     });
 
 // 删除部门或题库

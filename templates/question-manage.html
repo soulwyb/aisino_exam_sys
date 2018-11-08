@@ -25,7 +25,7 @@
                   <ul class="treeview-menu">
                     {% for company in companys %}
                     <li class="treeview">
-                      <a href="#" class="custom-tree-selected"><i class="fa fa-circle-o"></i> {{ company.name }}
+                      <a href="#" class="custom-tree-selected" type="company"><i class="fa fa-circle-o"></i> {{ company.name }}
                       </a>
                       <ul class="treeview-menu">
                       {% for department in departments %}
@@ -274,7 +274,7 @@
                       </div>
                   <div class="col-xs-12 col-md-4 col-lg-4">
                 <label>
-                  <input type="radio" name="r1" class="minimal" value="question">
+                  <input type="radio" name="r1" class="minimal" value="question" id="edit_question">
                     <span> 题库</span>
                 </label>
                   </div>
@@ -287,7 +287,7 @@
             <div class="form-group row">
                 <div class="col-xs-3 col-md-4 col-lg-4"></div>
                 <div class="custom-btn-group">
-                <button type="submit" class="btn btn-primary" style="margin-right: 3%;margin-left:-3%;">提交</button>
+                <button type="button" class="btn btn-primary" id="custom-edit-groups" style="margin-right: 3%;margin-left:-3%;">提交</button>
                 <button class="btn btn-primary custom-close-btn">取消</button>
                 </div>
             </div>
@@ -360,7 +360,7 @@
     })
 </script>
 <script>
-    var urls = "{% url 'question_bank:add_group_or_bank' %}"
+    var create_urls = "{% url 'question_bank:add_group_or_bank' %}"
+    var edit_urls = "{% url 'question_bank:edit_group_or_bank' %}"
 </script>
-<script src="{% static 'js/question-manage.js' %}"></script>
 {% endblock %}

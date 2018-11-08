@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 from organization.models import Company, Department, Group
 from question_bank.models import QuestionBank, Single_Choice_Question, Multiple_Choice_Question, True_or_False
-from .forms import Add_Edit_Group_QuestionForm
+from .forms import Add_Group_QuestionForm, Edit_Group_QuestionForm
 # Create your views here.
 
 # 题库页面
@@ -39,7 +39,7 @@ class add_group_or_questionView(View, LoginRequiredMixin):
     login_url = ''
     redirect_field_name = 'redirect_to'
     def post(self, request):
-        add_form = Add_Edit_Group_QuestionForm(request.POST)
+        add_form = Add_Group_QuestionForm(request.POST)
         if add_form.is_valid():
             input_type = request.POST.get('input_type', '')
             name = request.POST.get('name', '')
@@ -76,6 +76,33 @@ class add_group_or_questionView(View, LoginRequiredMixin):
                 return HttpResponse('{"status":"fail", "msg":"亲，不能选题库哦~"}', content_type="application/json")
         else:
             return HttpResponse('{"status":"fail", "msg":"亲，数据错误，亲不适用网页连接的吧"}', content_type="application/json")
+
+# 编辑组织部门或者题库
+class edit_group_or_questionView(View, LoginRequiredMixin):
+    login_url = ''
+    redirect_field_name = 'redirect_to'
+    def post(self, request):
+        edit_form = Edit_Group_QuestionForm(request.POST)
+        if edit_form.is_valid():
+            name = request.POST.get('name', '')
+            father_group = request.POST.get('father_group', '').strip()
+            check = checktype()
+            result, grade = check.checktype(father_group)
+            if result:
+                result.name = name
+                result.save()
+                return HttpResponse('{"status":"success","msg":"修改成功"}', content_type="application/json")
+            else:
+                que = QuestionBank.objects.filter(name = father_group)[0]
+                if que:
+                    que.name = name
+                    que.save()
+                    return HttpResponse('{"status":"success","msg":"修改成功"}', content_type="application/json")
+                else:
+                    return HttpResponse('{"status":"fail","msg":"失败，数据库中找不到这条数据哦。"}', content_type="application/json")
+        else:
+            return HttpResponse('{"status":"fail","msg":"错误，亲，数据不对哦"}', content_type="application/json")
+
 
 
 # 过滤题库层级
