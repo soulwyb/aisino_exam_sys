@@ -1,11 +1,14 @@
 # encoding:utf-8
 
 from itertools import chain
+import pandas as pd
 
 from django.shortcuts import render
 from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 from organization.models import Company, Department, Group
 from question_bank.models import QuestionBank, Single_Choice_Question, Multiple_Choice_Question, True_or_False
@@ -21,7 +24,7 @@ class question_manageView(View, LoginRequiredMixin):
         companys = Company.objects.all()
         departments = Department.objects.all()
         groups = Group.objects.all()
-        question_bank = QuestionBank.objects.get(id=1)
+        question_bank = QuestionBank.objects.all()[0]
         single_question = Single_Choice_Question.objects.filter(questionbank=question_bank)
         multiple_question = Multiple_Choice_Question.objects.filter(questionbank=question_bank)
         true_false = True_or_False.objects.filter(questionbank=question_bank)
@@ -44,8 +47,9 @@ class add_group_or_questionView(View, LoginRequiredMixin):
             input_type = request.POST.get('input_type', '')
             name = request.POST.get('name', '')
             father_group = request.POST.get('father_group', '').strip()
+            father_group_id = request.POST.get('name_id', '')
             check = checktype()
-            result, grade = check.checktype(father_group)
+            result, grade = check.checktype(father_group, father_group_id)
             if result:
                 if input_type == 'department':
                     dep = Department()
@@ -84,18 +88,19 @@ class edit_group_or_questionView(View, LoginRequiredMixin):
     def post(self, request):
         edit_form = Edit_Group_QuestionForm(request.POST)
         if edit_form.is_valid():
-            name = request.POST.get('name', '')
-            father_group = request.POST.get('father_group', '').strip()
+            new_name = request.POST.get('new_name', '')
+            old_name_id = request.POST.get('name_id')
+            old_name = request.POST.get('old_name', '').strip()
             check = checktype()
-            result, grade = check.checktype(father_group)
+            result, grade = check.checktype(old_name, old_name_id)
             if result:
-                result.name = name
+                result.name = new_name
                 result.save()
                 return HttpResponse('{"status":"success","msg":"修改成功"}', content_type="application/json")
             else:
-                que = QuestionBank.objects.filter(name = father_group)[0]
+                que = QuestionBank.objects.filter(Q(name = old_name) & Q(id=int(old_name_id)))[0]
                 if que:
-                    que.name = name
+                    que.name = new_name
                     que.save()
                     return HttpResponse('{"status":"success","msg":"修改成功"}', content_type="application/json")
                 else:
@@ -103,26 +108,55 @@ class edit_group_or_questionView(View, LoginRequiredMixin):
         else:
             return HttpResponse('{"status":"fail","msg":"错误，亲，数据不对哦"}', content_type="application/json")
 
+class del_group_or_questionView(View,  LoginRequiredMixin):
+    login_url = ''
+    redirect_field_name = 'redirect_to'
+    def post(self, request):
+        del_form = Edit_Group_QuestionForm(request.POST)
+        if del_form.is_valid():
+            name = request.POST.get('name', '')
+            name_id = request.POST.get('name_id')
+            result, grade = checktype.checktype(name, name_id)
+            if result:
+                result.delete()
+                return HttpResponse('{"status":"success","msg":"删除成功。"}', content_type='application/json')
+            else:
+                try:
+                    QuestionBank.objects.filter(Q(name = name) & Q(id=int(name_id)))[0].delete()
+                    return HttpResponse('{"status":"success","msg":"删除成功。"}', content_type='application/json')
+                except ObjectDoesNotExist:
+                    return HttpResponse('{"status":"fail","msg":"对象不存在哦"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail","msg":"错误，亲，数据不对哦"}', content_type="application/json")
 
 
 # 过滤题库层级
 class checktype:
-    def checktype(self,father_group = ''):
-        if Company.objects.filter(name=father_group):
-            com = Company.objects.filter(name=father_group)[0]
+    def checktype(self,name = '', id = ''):
+        if Company.objects.filter(name=name):
+            com = Company.objects.filter(Q(name=name) & Q(id=int(id)))[0]
             grade = 1
             return com, grade
-        elif Department.objects.filter(name=father_group):
-            dep = Department.objects.filter(name=father_group)[0]
+        elif Department.objects.filter(name=name):
+            dep = Department.objects.filter(Q(name=name) & Q(id=int(id)))[0]
             grade = 2
             return dep, grade
-        elif Group.objects.filter(name=father_group):
-            gro = Group.objects.filter(name=father_group)[0]
+        elif Group.objects.filter(name=name):
+            gro = Group.objects.filter(Q(name=name) & Q(id=int(id)))[0]
             grade = 3
             return gro, grade
         else:
             return False, 4
 
+# 导入题库
+class upload_question_bankView(View, LoginRequiredMixin):
+    login_url = ''
+    redirect_field_name = 'redirect_to'
+    def post(self, request):
+        xls = request.FILES.get('excel_upload', '')
+        df = pd.read_excel(xls)
+
+        return HttpResponse('{"status":"success","msg":"测试"}', content_type='application/json')
 
 
 

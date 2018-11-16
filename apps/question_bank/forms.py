@@ -16,4 +16,3 @@ class Add_Group_QuestionForm(forms.Form):
 
 class Edit_Group_QuestionForm(forms.Form):
     name = forms.CharField(required=True, min_length=4)
-    father_group = forms.CharField(required=True)

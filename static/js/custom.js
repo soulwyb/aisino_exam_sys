@@ -1,7 +1,6 @@
 
 $(function(){
     var flag = 0;
-    var title = '';
     var is_question_bank = false;
     var height = $(document).outerWidth(true);
 
@@ -43,16 +42,7 @@ $(function(){
 // 题库或组织编辑
     $('#edit_department').click(function(){
         pop_label('#custom-float-edit', '题库编辑');
-        if($('#custom-active').attr('type') == 'company'){
-            $('#edit_question').attr('disabled', 'true');
-        }
-    });
-
-// 删除部门或题库
-    $('#del_department').click(function(){
-        if(confirm('您确认要删除该题库或部门么(该题库下的考题或部门下的题库将全部删除!)?')) {
-            pass;
-        };
+        $('#custom-input-value').attr('value', title);
     });
 
 // 导入题库
@@ -71,7 +61,7 @@ $(function(){
         else{
             is_question_bank = false;
         }
-        title = $('#custom-active').text();
+        title = $('#custom-active').text().trim();
     });
 
 // 警告框关闭
