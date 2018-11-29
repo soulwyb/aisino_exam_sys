@@ -22,8 +22,8 @@ class QuestionBank(models.Model):
     def __str__(self):
         return self.name
 
-#单选题
-class Single_Choice_Question(models.Model):
+#题目内容
+class Questions(models.Model):
     DEGREE_CHOICES = (
         ('cj', u'初级'),
         ('zj', u'中级'),
@@ -32,6 +32,11 @@ class Single_Choice_Question(models.Model):
     VALID_CHOICES = (
         ('true', u'有效'),
         ('false', u'无效'),
+    )
+    TYPE_CHOICES = (
+        ('dx', u'单选'),
+        ('dx', u'多选'),
+        ('pd', u'判断')
     )
     questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name=u'题目')
@@ -44,67 +49,10 @@ class Single_Choice_Question(models.Model):
     answer = models.CharField(max_length=4, verbose_name=u'答案')
     valid = models.CharField(choices=VALID_CHOICES, max_length=5, verbose_name=u'是否有效')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
-    type = models.CharField(default=u'单选', max_length=10, verbose_name=u'类型')
+    type = models.CharField(choices=TYPE_CHOICES, max_length=5, verbose_name=u'类型')
 
     class Meta:
         verbose_name = u'单选题'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.name
-
-#多选题
-class Multiple_Choice_Question(models.Model):
-    DEGREE_CHOICES = (
-        ('cj', u'初级'),
-        ('zj', u'中级'),
-        ('gj', u'高级'),
-    )
-    VALID_CHOICES = (
-        ('true', u'有效'),
-        ('false', u'无效'),
-    )
-    questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, verbose_name=u'题目')
-    degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
-    option_0 = models.CharField(max_length=200, verbose_name='A')
-    option_1 = models.CharField(max_length=200, verbose_name='B')
-    option_2 = models.CharField(max_length=200, verbose_name='C')
-    option_3 = models.CharField(max_length=200, null = True, blank=True, verbose_name='D')
-    option_4 = models.CharField(max_length=200, null = True, blank=True, verbose_name='E')
-    answer = models.CharField(max_length=4, verbose_name=u'答案')
-    valid = models.CharField(choices=VALID_CHOICES, max_length=5, verbose_name=u'是否有效')
-    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
-    type = models.CharField(default=u'多选', max_length=10, verbose_name=u'类型')
-
-    class Meta:
-        verbose_name = u'多选题'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.name
-
-#判断题
-class True_or_False(models.Model):
-    DEGREE_CHOICES = (
-        ('cj', u'初级'),
-        ('zj', u'中级'),
-        ('gj', u'高级'),
-    )
-    VALID_CHOICES = (
-        ('true', u'有效'),
-        ('false', u'无效'),
-    )
-    questionbank = models.ForeignKey(QuestionBank, verbose_name=u'题库', on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, verbose_name=u'题目')
-    degree = models.CharField(choices=DEGREE_CHOICES, max_length=5, verbose_name=u'考试难度')
-    answer = models.BooleanField(default=True, verbose_name=u'是否正确（正确打钩）')
-    valid = models.CharField(choices=VALID_CHOICES, max_length=5, verbose_name=u'是否有效')
-    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
-    type = models.CharField(default=u'判断', max_length=10, verbose_name=u'类型')
-
-    class Meta:
-        verbose_name = u'判断题'
         verbose_name_plural = verbose_name
 
     def __str__(self):

@@ -90,24 +90,30 @@ $(function(){
 
     // 上传考题
     $('#custom_upload_file').click(function(){
-            var form_data = new FormData();
-            var file_info = $('#file')[0].files[0];
-            form_data.append(file, file_info);
-            $.ajax({
-                url: "",
-                type: 'POST',
-                async: false,
-                data: form_data,
-                processData: false,
-                contentType: false,
-                success: function(data){
-                    if(data.status == 'success'){
-                        pass
-                    }else if(data.status == 'fail'){
-                        pass
-                    }
-                }
-            })
-    });
+        var form_data = new FormData();
+        var file_info = $('#file')[0].files[0];
+        form_data.append('file', file_info);
+        form_data.append('question_bank_name', title);
+        $.ajax({
+            url: upload_urls,
+            type: 'POST',
+            async: false,
+            data: form_data,
+            processData: false,
+            contentType: false,
+            beforeSend: function(xhr, settings){
+                xhr.setRequestHeader("X-CSRFToken", $('#csrf_token').val());
+            },
+            success: function(data){
+                if(data.status == 'success'){
+                    $('.custom-div-hidden').css("display", "none");
+                    $('#custom-layer-display').css("display", "none");
+                    alert('文件成功上传');
 
+                }else if(data.status == 'fail'){
+                    alert(data.msg)
+                }
+            }
+        })
+    });
 })

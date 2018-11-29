@@ -47,8 +47,51 @@ $(function(){
 
 // 导入题库
     $('#input_department').click(function(){
-        pop_label('#custom-float-input', '题库导入');
+        if(is_question_bank) {
+            pop_label('#custom-float-input', '题库导入');
+        }
+        else{
+            $("#custom-warning-pop span").text("亲，要选择题库哦~");
+            $('#custom-layer-display').css({"display":"block","height":height});
+            $("#custom-warning-pop").css("display", "block");
+        }
     });
+
+    // 下载题库
+    $('#output_department').click(function(){
+        var name_id = $('#custom-active > i').attr('id')
+        $('#input_href').attr('href',)
+        if(is_question_bank) {
+            // $.ajax({
+            //     url:download_urls,
+            //     type:'GET',
+            //     async: false,
+            //     data: {'question_id': name_id},
+            //     success: function(data){
+            //         console.log(data)
+            //     }
+            // })
+            var form=$("<form>");
+            form.attr("style", "display:none");
+            form.attr("target", "");
+            form.attr("method", "get");
+            form.attr("action", download_urls);
+            $("body").append(form)
+
+            var input=$("<input>");
+            input.attr("type","hidden");
+            input.attr("name","question_id");
+            input.attr("value",name_id);
+            form.append(input)
+
+            form.submit();
+        }
+        else{
+            $("#custom-warning-pop span").text("亲，要选择题库哦~");
+            $('#custom-layer-display').css({"display":"block","height":height});
+            $("#custom-warning-pop").css("display", "block");
+        }
+});
 
 // 组织部门树形菜单已点击标记
     $('.custom-tree-selected').click(function(){
